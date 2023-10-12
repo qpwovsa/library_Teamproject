@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.MemberMapper">
+	<select id="memberAll" resultType="com.example.demo.vo.MemberVo">
+		select * from member order by no desc limit #{start},10
+	</select>
+	<select id="getChong" resultType="int">
+		select ceil(count(*)/10) from member
+	</select>
+	<select id="detail" resultType="HashMap">
+		select * from member where userid=#{userid}
+	</select>
+	<select id="rSeat" resultType="com.example.demo.vo.ReserveSeatVo">
+		select * from reserveseat where userid=#{userid}
+	</select>
+	<insert id="banOk">
+		update member set breason=#{breason}, ban=1 where userid=#{userid}
+	</insert>
+	<update id="unsusBan">
+		update member set ban=0, breason="" where userid=#{usreid}
+	</update>
+	<select id="bLoan" resultType="com.example.demo.vo.BookLoanVo">
+		select * from bookloan where userid=#{userid} and state=1
+	</select>
+	<select id="myInquiry" resultType="com.example.demo.vo.InquiryVo">
+		select * from inquiry where userid=#{userid} order by no desc
+	</select>
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.LoanlistMapper">
+	<select id="list" resultType="com.example.demo.vo.BookLoanVo">
+		select * from bookloan where
+		state=1 order by no desc limit #{start},10
+	</select>
+	<select id="getChong" resultType="int">
+		select ceil( count(*)/10 ) from bookloan where state=1
+	</select>
+</mapper>

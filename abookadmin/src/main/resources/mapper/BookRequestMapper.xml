@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BookRequestMapper">
+	<select id="getChong" resultType="int">
+		select ceil(count(*)/10) from bookrequest
+	</select>
+	<select id="hopelist"
+		resultType="com.example.demo.vo.BookRequestVo">
+		select * from bookrequest order by no desc limit #{start},10
+	</select>
+	<update id="cancelBrequest">
+		update bookrequest set state=2 where no=#{brno}
+	</update>
+</mapper>

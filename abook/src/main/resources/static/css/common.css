@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+/* reset */
+*, *::before, *::after{box-sizing: border-box;}
+html {width:100%; height: 100%;}
+body {font-size: 16px; font-weight: normal; font-family:'NotoSans', 'Noto Sans TC', '맑은 고딕', 'Malgun Gothic', 'AppleGothic', sans-serif; color: #333; height: 100%; letter-spacing: 0px;}
+html, body, div, span, p, ul, li, form, label, input, textarea, button, select, table, th, td, article, aside, section, img {margin: 0; padding: 0; border: 0;}
+table {width: 100%; border-collapse: separate; border-spacing: 0; font-size: inherit;}
+th, td {font-size: inherit; line-height: inherit; word-break: normal;}
+ol, ul {list-style: none;}
+img {max-width: 100%; max-height: 100%;}
+a {text-decoration: none; color: inherit; cursor:pointer;}
+h1, h2, h3, h4, h5, h6 {margin: 0; padding: 0; font-weight: 500; font-size: inherit;}
+strong, b {font-weight: 500;}
+input, textarea, select, button {font-size: inherit; font-family: inherit; line-height: inherit; outline:none;}
+input, textarea {resize: none; border-radius: 0; background: #fff; color:#333;}
+input[type="text"], input[type="password"], input[type="email"], input[type="number"] {height: 45px; padding: 0 20px; border: 1px solid #e2e2e2;border-radius:3px;}
+input[type="checkbox"], input[type="radio"] {padding: 0; border-radius: 0;}
+input[type="text"],img,select {vertical-align: middle;}
+button,input[type="button"], input[type="reset"], input[type="submit"] {overflow: visible; cursor: pointer;}
+button {border: 0; background-color: transparent;}
+
+/*font*/
+@font-face{
+    font-family:NotoSans;
+    src:url(../font/NotoSansKR-Regular.eot);
+    src:local('※'), url(../font/NotoSansKR-Regular.woff) format('woff');
+}
+@font-face{
+    font-family:NotoSansM;
+    src:url(../font/NotoSansKR-Medium.eot);
+    src:local('※'), url(../font/NotoSansKR-Medium.woff) format('woff');
+}
+@font-face{
+    font-family:NotoSansB;
+    src:url(../font/NotoSansKR-Bold.eot);
+    src:local('※'), url(../font/NostoSansKR-Bold.woff) format('woff');
+}
+@font-face{
+    font-family:NotoSansDL;
+    src:url(../font/NotoSansKR-DemiLight.eot);
+    src:local('※'), url(../font/NotoSansKR-DemiLight.woff) format('woff');
+}
+
+/*탭메뉴*/
+#secWrap{
+	position: relative;
+}
+#secWrap .sImg{
+	display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 180px;
+    background-image: url(/static/img/common/sal_img.png), linear-gradient(#f3ede3, #f3ede3);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+#section{
+	width: 1500px;
+	margin: auto;
+	padding-top: 50px;
+}
+#section:after{
+	content: "";
+    display: block;
+    clear: both;
+}
+#labNav{
+	float: left;
+    width: 270px;
+    position: relative;
+}
+#labNav h2{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 140px;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background: #93765a;
+}
+#lnb > li{
+	border-radius: 10px;
+	font-family: NotoSansM;
+}
+#lnb > li.on a{
+	color: #967759;
+	border: 1px solid #967759;
+}
+#lnb > li > a{
+	display: flex;
+    align-items: center;
+    position: relative;
+    height: 60px;
+    padding: 0 30px 0 20px;
+    font-size: 17px;
+    line-height: 60px;
+    color: #464646;
+    border-radius: 10px;
+    border: 1px solid #e0e3e6;
+    background: #fff;
+    z-index: 1;
+}
+#lnb > li + li {
+   	margin-top: 10px;
+}
+#contentCore{
+	float: right;
+   	width: calc(100% - 330px);
+}
+#contentCore .naviTit{
+	position: relative;
+    height: 120px;
+    z-index: 11;
+    font-family: NotoSansM;
+    padding-top: 20px;
+}
+.naviTit h3{
+	font-size: 30px;
+    color: #333;
+    margin-bottom: 15px;
+}
+.naviTit p{
+	font-size: 14px;
+	color:#555;
+}
+#contents{
+	position: relative;
+    z-index: 10;
+    margin-top: 50px;
+    /*color: #777;*/
+}

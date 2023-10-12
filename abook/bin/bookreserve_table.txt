@@ -1,0 +1,6 @@
+create table bookreserve(
+userid char(20),
+bcode char(6),
+rental date,
+returnday date,
+state int default 0);

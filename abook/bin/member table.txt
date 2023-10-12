@@ -1,0 +1,12 @@
+create table member(
+no int auto_increment primary key,
+userid char(20) unique,
+name char(20),
+pwd char(10),
+phone varchar(20),
+email1 varchar(100),
+email2 varchar(100),
+zip varchar(100),
+addr varchar(100),
+addrDtl varchar(100),
+writeday date);

@@ -1,0 +1,19 @@
+create table tablename(
+no int auto_increment primary key,
+tname char(10),
+time9 int default 0,
+time10 int default 0,
+time11 int default 0,
+time12 int default 0,
+time13 int default 0,
+time14 int default 0,
+time15 int default 0,
+time16 int default 0,
+time17 int default 0,
+time18 int default 0) ;
+
+insert into tablename(tname,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18) values('pc1',0,0,0,0,0,0,0,0,0,0);
+초기화
+update tablename set time9=0,time10=0,time11=0,time12=0,time13=0,time14=0,time15=0,time16=0,time17=0,time18=0;
+이 사람이 하루에 몇시간 예약했는지 찾는 쿼리문 만듬
+select time9+tim10+time11+time12+time13+time14+time15+time16+time17+time18 as total from reserveseat where userid=#{userid} and reserveday=#{reserveday}

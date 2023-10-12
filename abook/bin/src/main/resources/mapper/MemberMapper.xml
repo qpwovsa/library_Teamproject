@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.MemberMapper">
+	<select id="useridCheck" resultType="int">
+		select count(*) from member
+		where userid=#{userid} order by no desc
+	</select>
+	<insert id="memberOk">
+		insert into member(userid,name,pwd,phone,email1,email2,zip,addr,addrDtl,writeday)
+		values(#{userid},#{name},#{pwd},#{phone},#{email1},#{email2},#{zip},#{addr},#{addrDtl},now())
+	</insert>
+	<select id="loginOk" resultType="String">
+		select name from member where userid=#{userid} and pwd=#{pwd}
+	</select>
+	<select id="idcheck" resultType="String">
+		select userid from member where name=#{name} and phone=#{phone}
+	</select>
+	<select id="pwdcheck" resultType="String">
+		select count(*) from member where name=#{name} and phone=#{phone}
+	</select>
+	<select id="newPwdCheck" resultType="String">
+		select pwd from member where userid=#{userid}
+	</select>
+	<update id="updatePwd">
+		update member set pwd=#{pwd} where userid=#{userid}
+	</update>
+	<select id="mypage" resultType="com.example.demo.vo.MemberVo">
+		select * from member where userid=#{userid}
+	</select>
+	<update id="mypageUpdateOk" parameterType="com.example.demo.vo.MemberVo">
+		update member set
+		name=#{name},pwd=#{pwd},phone=#{phone},email1=#{email1},email2=#{email2},zip=#{zip},addr=#{addr},addrDtl=#{addrDtl}
+		where userid=#{userid} and no=#{no}
+	</update>
+	<update id="mypageUpdateOk2">
+		update member set
+		name=#{name},phone=#{phone},email1=#{email1},email2=#{email2},zip=#{zip},addr=#{addr},addrDtl=#{addrDtl}
+		where userid=#{userid} and no=#{no}
+	</update>
+	<select id="getBreason" resultType="String">
+		select breason from member where userid=#{userid}
+	</select>
+	<select id="getBan" resultType="String">
+		select ban from member where userid=#{userid}
+	</select>
+	<select id="checkUserid" resultType="String">
+		select userid from member where userid=#{userid}
+	</select>
+</mapper>

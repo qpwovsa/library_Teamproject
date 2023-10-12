@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ReservestatusMapper">
+	<select id="list" resultType="HashMap">
+		select *,(select title from
+		bookregi where bcode=b.bcode) as title from bookreserve as b order by
+		writeday desc limit #{start},10
+	</select>
+	<update id="rcheck">
+		update bookregi set state=2 where bcode=#{bcode}
+	</update>
+	<select id="getbook" resultType="com.example.demo.vo.BookregiVo">
+		select title,publi,writer from
+		bookregi where bcode=#{bcode}
+	</select>
+	<insert id="setloan">
+		insert into
+		bookloan(bcode,userid,title,publi,writer,rental,returnday)
+		values(#{bcode},#{userid},#{title},#{publi},#{writer},curdate(),Date_ADD(curdate(), Interval 5 day))
+	</insert>
+	<delete id="delbreserve">
+		delete from bookreserve where bcode=#{bcode}
+	</delete>
+	<update id="dcheck">
+		update bookregi set state=0 where bcode=#{bcode}
+	</update>
+	<insert id="setbrefuse">
+		insert into
+		brefuse(bcode,userid,title,publi,writer,writeday)
+		values(#{bcode},#{userid},#{title},#{publi},#{writer},#{writeday})
+	</insert>
+	<update id="cntupdate">
+		update bookregi set cnt=cnt+1 where bcode like
+		concat(#{bcode},'%')
+	</update>
+	<select id="getChong" resultType="int">
+		select ceil( count(*)/10 ) from bookreserve
+	</select>
+</mapper>

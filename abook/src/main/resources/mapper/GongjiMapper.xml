@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.GongjiMapper">
+	<select id="list" resultType="com.example.demo.vo.GongjiVo">
+		select * from gongji where ${type} like concat('%',"${keyword}",'%') order
+		by no desc limit #{start},10
+	</select>
+	<select id="list2" resultType="com.example.demo.vo.GongjiVo">
+		select * from gongji where title like concat('%',"${keyword}",'%')
+		or content like concat('%',"${keyword}",'%')
+		order by no desc limit #{start},10;
+	</select>
+	<update id="readnum">
+		update gongji set readnum=readnum+1 where no=#{no}
+	</update>
+	<select id="content" resultType="com.example.demo.vo.GongjiVo">
+		select * from gongji where no=#{no}
+	</select>
+	<select id="getChong" resultType="int">
+		select ceil( count(*)/10 ) from gongji
+	</select>
+	<select id="getChong2" resultType="int">
+		select ceil( count(*)/10 ) from gongji
+		where ${type} like concat('%',"${keyword}",'%')
+	</select>
+	<select id="getChong3" resultType="int">
+		select ceil( count(*)/10 ) from gongji
+		where title like concat('%',"${keyword}",'%')
+		or content like concat('%',"${keyword}",'%')
+	</select>
+</mapper>

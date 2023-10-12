@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.MypageMapper">
+	<select id="reserveok" resultType="com.example.demo.vo.ReserveSeatVo">
+		select * from reserveseat where userid=#{userid}
+	</select>
+	<select id="reserveToday" resultType="com.example.demo.vo.ReserveSeatVo">
+		select * from reserveseat where userid=#{userid} and reserveday=#{today}
+	</select>
+	<delete id="cancelSeat">
+		delete from reserveseat where no=#{no}
+	</delete>
+	<update id="resetTablename">
+		update tablename set ${time}=0 where tname=#{tname}
+	</update>
+	<!-- 0909 강서영 백업 -->
+	<select id="bookreserve" resultType="HashMap">
+		select b1.title, b1.publi, b1.writer, b1.bcode, b1.state, b2.userid,
+		b2.writeday from
+		bookregi as b1 inner join bookreserve as b2 on b1.bcode=b2.bcode
+		where userid=#{userid}
+	</select>
+	<select id="bookloan" resultType="HashMap">
+		select * from bookloan where userid=#{userid} and state=0
+	</select>
+	<select id="bookrefuse" resultType="HashMap">
+		select * from brefuse where userid=#{userid}
+	</select>
+	<delete id="brsvCancel">
+		delete from bookreserve where bcode=#{bocde}
+	</delete>
+	<update id="changeState">
+		update bookregi set state=0 where bcode=#{bcode}
+	</update>
+	<update id="giganUpdate">
+		update bookloan set
+		gigan=1,returnday=date_add(returnday,interval 3 day) where no=#{no}
+	</update>
+	<update id="returnOk">
+		update bookloan set state=1,writeday=now() where no=#{no}
+	</update>
+	<select id="loanlist" resultType="HashMap">
+		select * from bookloan where
+		userid=#{userid} and state=1 order by no desc limit #{start},10
+	</select>
+	<!-- jjim 추가 0911 -->
+	<select id="myjjim" resultType="HashMap">
+		select j.writeday,
+		j.bcode,j.userid, b.title, b.publi, b.writer, b.writeyear, b.ect, b.bimg
+		from jjim as j inner join bookregi as b on b.bcode=j.bcode
+		where userid=#{userid}
+	</select>
+	<select id="myinquiry1" resultType="com.example.demo.vo.InquiryVo">
+		select * from inquiry where userid=#{userid} and state=0
+	</select>
+	<select id="myinquiry2" resultType="com.example.demo.vo.InquiryVo">
+		select * from inquiry where userid=#{userid} and state=1
+	</select>
+	<!-- mypage 페이지 처리 -->
+	<select id="getChongSeat" resultType="int">
+		select ceil(count(*)/10) from reserveseat where userid=#{userid}
+	</select>
+	<select id="getChongBregi1" resultType="int">
+		select ceil(count(*)/10) from bookregi where userid=#{userid}
+	</select>
+	<select id="getChongjjim" resultType="int">
+		select ceil(count(*)/10) from jjim where userid=#{userid}
+	</select>
+	<select id="getChongloan" resultType="int">
+		select ceil(count(*)/10) from bookloan where userid=#{userid}
+	</select>
+	<select id="getChongInquiry" resultType="int">
+		select ceil(count(*)/10) from inquiry where userid=#{userid} and state=1
+	</select>
+</mapper>

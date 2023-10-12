@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BreserveMapper">
+	<select id="list" resultType="com.example.demo.vo.BookregiVo">
+		select * from bookregi where
+		${type} like concat('%',#{keyword},'%')
+		group by substr(bcode,1,4)
+		order by ${str} limit #{start},10;
+	</select>
+	<select id="list2" resultType="com.example.demo.vo.BookregiVo">
+		<!-- type은 다쓸거기때문에 받아오는 값도 없으니 매개변수로 받은거 지우고 title,publi,writer로 써준다. -->
+		select * from bookregi where title like concat('%',"${keyword}",'%')
+		or writer like concat('%',"${keyword}",'%') or
+		publi like
+		concat('%',"${keyword}",'%')
+		group by substr(bcode,1,4) order by ${str} limit #{start},10;
+	</select>
+	<select id="getChong" resultType="int">
+		select ceil( count( distinct left(bcode,4) )/10 ) from bookregi
+	</select>
+	<select id="getChong2" resultType="Integer">
+		select ceil(count(distinct
+		left(bcode,4))/10) from bookregi
+		where ${type} like concat('%',#{keyword},'%')
+	</select>
+	<select id="getChong3" resultType="Integer">
+		select ceil(count(distinct
+		left(bcode,4))/10) from bookregi
+		where title like concat('%',"${keyword}",'%')
+		or writer like concat('%',"${keyword}",'%')
+		or publi like concat('%',"${keyword}",'%')
+	</select>
+	<select id="content" resultType="HashMap">
+		select * ,(select returnday from
+		bookloan where bcode=b.bcode) as returnday from bookregi as b where
+		bcode like concat(#{bcode},'%')
+	</select>
+	<insert id="bresOk">
+		insert into bookreserve(userid,bcode,writeday)
+		values(#{userid},#{bcode},now())
+	</insert>
+	<update id="bresUpdate">
+		update bookregi set state=1 where bcode=#{bcode}
+	</update>
+	<select id="cntCheck" resultType="int">
+		select count(*) from bookreserve where userid=#{userid}
+	</select>
+	<select id="cntCheck2" resultType="int">
+		select count(*) from bookloan where state=0 and userid=#{userid}
+	</select>
+	<insert id="addjjim">
+		insert into jjim(userid,bcode,writeday) values(#{userid},#{bcode},now())
+	</insert>
+	<delete id="deljjim">
+		delete from jjim where userid=#{userid} and bcode=#{bcode}
+	</delete>
+	<select id="jjimCheck" resultType="boolean">
+		select count(*) from jjim
+		where userid=#{userid} and bcode like concat(#{bcode},'%')
+	</select>
+</mapper>

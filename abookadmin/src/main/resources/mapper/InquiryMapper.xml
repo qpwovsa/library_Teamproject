@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.InquiryMapper">
+	<select id="getChong" resultType="int">
+		select ceil(count(*)/10) from inquiry
+	</select>
+	<select id="getChong2" resultType="int">
+		select ceil(count(*)/10) from inquiry
+		where ${type} like concat('%',"${keyword}",'%')
+	</select>
+	<select id="getChong3" resultType="int">
+		select ceil(count(*)/10) from
+		inquiry
+		where title like concat('%',"${keyword}",'%')
+		or content like concat('%',"${keyword}",'%')
+	</select>
+	<select id="setRownum">
+		set @rownum=(select count(*) from inquiry)-${start}
+	</select>
+	<select id="list" resultType="com.example.demo.vo.InquiryVo">
+		select * ,(@rownum := @rownum-1)+1 as rnum from inquiry
+		where ${type} like concat('%',"${keyword}",'%')
+		order by no desc limit #{start},10
+	</select>
+	<select id="list2" resultType="com.example.demo.vo.InquiryVo">
+		select * from inquiry where title like concat('%',"${keyword}",'%')
+		or content like concat('%',"${keyword}",'%')
+		order by no desc limit #{start},10;
+	</select>
+	<select id="content" resultType="com.example.demo.vo.InquiryVo">
+		select * from inquiry where no=#{no}
+	</select>
+	
+	<insert id="writeOk">
+		insert into mtm(content,inno,writeday)
+		values(#{content},#{inno},now())
+	</insert>
+	<select id="getAnswer" resultType="com.example.demo.vo.MtmVo">
+		select * from mtm where inno=#{no}
+	</select>
+	<update id="chgState">
+		update inquiry set state=1 where no=#{inno}
+	</update>
+	<update id="updateOk">
+		update mtm set content=#{content} where no=#{no}
+	</update>
+	<select id="getMtm"  resultType="com.example.demo.vo.MtmVo">
+		select * from mtm
+	</select>
+</mapper>

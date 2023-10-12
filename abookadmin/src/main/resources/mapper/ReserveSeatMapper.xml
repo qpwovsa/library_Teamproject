@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ReserveSeatMapper">
+	<select id="searchTable" resultType="com.example.demo.vo.TableNameVo">
+		select close from tablename
+	</select>
+	<update id="stopTable">
+		update tablename set close=1 where tname=#{tname}
+	</update>
+	<update id="startTable">
+		update tablename set close=0 where tname=#{tname}
+	</update>
+	<select id="searchReserve1"
+		resultType="com.example.demo.vo.ReserveSeatVo">
+		select * from reserveseat order by no desc limit #{start},10
+	</select>
+	<select id="searchReserve2" resultType="com.example.demo.vo.ReserveSeatVo">
+		select * from reserveseat where reserveday=#{today} order by tname desc
+	</select>
+	<update id="resetTablename">
+		update tablename set ${time}=0 where tname=#{tname}
+	</update>
+	<delete id="cancelSeat">
+		delete from reserveseat where no=#{no}
+	</delete>
+	<select id="getChong1" resultType="int">
+		select ceil(count(*)/10) from reserveseat
+	</select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ReserveSeatMapper">
+	<select id="tableName" resultType="com.example.demo.vo.TableNameVo">
+		select * from tablename where tname=#{tname}
+	</select>
+	<insert id="reserveSeater" parameterType="com.example.demo.vo.ReserveSeatVo">
+		insert into
+		reserveseat(userid,reserveday,tname,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18)
+		values(#{userid},now(),#{tname},#{time9},#{time10},#{time11},#{time12},#{time13},#{time14},#{time15},#{time16},#{time17},#{time18})
+	</insert>
+	<update id="updateTableName">
+		update tablename set ${time}=1 where tname=#{tname}
+	</update>
+	<select id="reserveok" resultType="com.example.demo.vo.ReserveSeatVo">
+		select * from reserveseat where userid=#{userid} order by no desc limit 1
+	</select>
+	<select id="totalTime" resultType="int">
+		select ifnull(sum(time9+time10+time11+time12+time13+time14+time15+time16+time17+time18),0)
+		from reserveseat where userid=#{userid} and reserveday=#{time}
+	</select>
+	<select id="searchTable"
+		resultType="com.example.demo.vo.TableNameVo">
+		select close from tablename
+	</select>
+	<update id="closeTable">
+		update tablename set ${time}=1
+	</update>
+	<update id="closeAllTable">
+		update tablename set
+		time9=1,time10=1,time11=1,time12=1,time13=1,time14=1,time15=1,time16=1,time17=1,time18=1;
+	</update>
+</mapper>

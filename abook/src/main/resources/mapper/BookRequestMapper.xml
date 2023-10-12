@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BookRequestMapper">
+	<insert id="requestwrite_ok">
+		insert into
+		bookrequest(title,writer,writeyear,publi,gonge,ect,userid,writeday)
+		values(#{title},#{writer},#{writeyear},#{publi},#{gonge},#{ect},#{userid},now())
+	</insert>
+	<select id="list2" resultType="com.example.demo.vo.BookRequestVo">
+		<!-- type은 다쓸거기때문에 받아오는 값도 없으니 매개변수로 받은거 지우고 title,publi,writer로 써준다. -->
+		select * from bookrequest where title like
+		concat('%',"${keyword}",'%')
+		or writer like concat('%',"${keyword}",'%') or
+		publi like concat('%',"${keyword}",'%')
+		order by no desc limit #{start},10;
+	</select>
+	<select id="getChong" resultType="int">
+		select ceil(count(*)/10) from bookrequest
+	</select>
+	<select id="getChong2" resultType="int"> <!-- 전체검색 제외일경우 페이지 -->
+		select ceil(count(*)/10) from bookrequest
+		where ${type} like concat('%',"${keyword}",'%')
+	</select>
+	<select id="getChong3" resultType="int"> <!-- 전체검색일경우 페이지 -->
+		select ceil(count(*)/10) from bookrequest
+		where title like concat('%',"${keyword}",'%')
+		or writer like concat('%',"${keyword}",'%') or
+		publi like concat('%',"${keyword}",'%')
+	</select>
+	<select id="search" resultType="com.example.demo.vo.BookRequestVo"> <!-- 검색창 -->
+		select * from bookrequest where ${type} like
+		concat('%',"${keyword}",'%') order by no desc limit #{start},10
+	</select>
+	<select id="rcontent" resultType="com.example.demo.vo.BookRequestVo">
+		select * from bookrequest where no=#{no}
+	</select>
+	<select id="rupdate" resultType="com.example.demo.vo.BookRequestVo">
+		select * from bookrequest where no=#{no}
+	</select>
+	<update id="rupdate_ok">
+		update bookrequest set
+		title=#{title},writer=#{writer},writeyear=#{writeyear},publi=#{publi}
+		,userid=#{userid},ect=#{ect},gonge=#{gonge} where no=#{no}
+	</update>
+	<delete id="delete">
+		delete from bookrequest where no=#{no}
+	</delete>
+</mapper>
